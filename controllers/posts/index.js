@@ -52,9 +52,20 @@ var updatePost = function(req, res) {
   });
 };
 
+var deletePost = function(req, res) {
+  Post.findByIdAndRemove(req.params.id, function(err) {
+    if (err) {
+      res.send(500, err);
+    } else {
+      res.json(200, { "deleted": true });
+    }
+  });
+}
+
 module.exports = {
   getPost,
   getPosts,
   createPost,
-  updatePost
+  updatePost,
+  deletePost
 };

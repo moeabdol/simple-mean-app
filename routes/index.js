@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+var base = process.env.PWD;
+var posts = require(base + "/controllers/posts");
+
+router.get("/posts", posts.getPosts);
+router.post("/posts", posts.createPost);
 
 module.exports = router;

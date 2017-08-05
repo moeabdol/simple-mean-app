@@ -99,6 +99,41 @@ describe("Post API", function() {
     });
   });
 
+  describe("PUT /posts/:id", function() {
+    it("should update post", function(done) {
+      var req = {
+        params: { id: id },
+        body: {
+          "body": "Hello World!"
+        }
+      };
+
+      var res = testUtils.responseValidator(200, function(post) {
+        post.should.have.property("body");
+        post.body.should.equal("Hello World!");
+        done();
+      });
+
+      posts.updatePost(req, res);
+    });
+  });
+
+  describe("DELETE /posts/:id", function() {
+    it("should delete post", function(done) {
+      var req = {
+        params: { id: id }
+      };
+
+      var res = testUtils.responseValidator(200, function(obj) {
+        obj.should.have.property("deleted");
+        obj.deleted.should.equal(true);
+        done();
+      });
+
+      posts.deletePost(req, res);
+    });
+  });
+
   after(function(done) {
     Post.remove({}, function(err) {
       if (err) { console.log(err); }
